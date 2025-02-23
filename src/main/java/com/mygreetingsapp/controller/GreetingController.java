@@ -6,6 +6,7 @@ import com.mygreetingsapp.entity.GreetingMessage;
 import com.mygreetingsapp.service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,6 @@ public class GreetingController {
 
     @Autowired
     private final GreetingService greetingService;
-
 
     // Constructor to initialize greeting service (DI = dependency Injection)
     public GreetingController(GreetingService greetingService) {
@@ -35,10 +35,16 @@ public class GreetingController {
         return greetingService.getAllGreetings();
     }
 
+    // Created a method to get messages using id
+    @GetMapping("/{Id}")
+    public GreetingMessage getGreetingById(@PathVariable Long Id) {
+        return greetingService.getGreetingById(Id);
+    }
 
+    // Created a method to get all messages using id
     @GetMapping("/{id}")
-    public GreetingMessage getGreetingById(@PathVariable Long id) {
-        return greetingService.getGreetingById(id);
+    public ResponseEntity<GreetingMessage> getAllGreetingById(@PathVariable Long id) {
+        return ResponseEntity.ok(greetingService.getGreetingById(id));
     }
 
     // Handles PUT requests
