@@ -47,12 +47,14 @@ public class GreetingController {
         return ResponseEntity.ok(greetingService.getGreetingById(id));
     }
 
-    // Handles PUT requests
-    @PutMapping
-    public GreetingResponse putGreeting() {
-        return new GreetingResponse(greetingService.putGreetingMessage(), HttpStatus.OK.value());
-    }
+    @PutMapping("/{id}")
+    public ResponseEntity<GreetingMessage> updateGreeting(@PathVariable Long id, @RequestBody GreetingMessage newGreeting) {
+        // Making call to service layer update greeting and get the updated response
+        GreetingMessage updatedGreeting = greetingService.updateGreeting(id, newGreeting.getMessage());
 
+        // returning the updated greeting status
+        return ResponseEntity.ok(updatedGreeting);
+    }
     // Handles DELETE requests
     @DeleteMapping
     public GreetingResponse deleteGreeting() {
