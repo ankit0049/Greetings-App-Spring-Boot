@@ -1,5 +1,6 @@
 package com.mygreetingsapp.controller;
 
+import com.mygreetingsapp.dto.GreetingRequest;
 import com.mygreetingsapp.dto.GreetingResponse;
 import com.mygreetingsapp.service.GreetingService;
 import org.springframework.http.HttpStatus;
@@ -15,16 +16,17 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    // Handles GET requests
+    // Handle GET requests (Default Greeting)
     @GetMapping
-    public GreetingResponse getGreeting() {
-        return new GreetingResponse(greetingService.getGreetingMessage(), HttpStatus.OK.value());
+    public GreetingResponse getDefaultGreeting() {
+        return new GreetingResponse(greetingService.getGreetingMessage(null, null), 200);
     }
 
-    // Handles POST requests
+    // Handle POST requests (Personalized Greeting)
     @PostMapping
-    public GreetingResponse postGreeting() {
-        return new GreetingResponse(greetingService.postGreetingMessage(), HttpStatus.CREATED.value());
+    public GreetingResponse createGreeting(@RequestBody GreetingRequest request) {
+        String message = greetingService.getGreetingMessage(request.getFirstName(), request.getLastName());
+        return new GreetingResponse(message, 201);
     }
 
     // Handles PUT requests

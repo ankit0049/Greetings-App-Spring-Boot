@@ -5,14 +5,22 @@ import org.springframework.stereotype.Service;
 // Service layer to handle business logic
 @Service
 public class GreetingService {
-    // Get method to get the content
-    public String getGreetingMessage() {
-        return "Hello Ankit Rajput, this is a GET request!";
-    }
-
-    // Post Method to send the response body
-    public String postGreetingMessage() {
-        return "Hello Ankit Rajput, this is a POST request!";
+    // Created a method to get the Greeting message with the given name
+    public String getGreetingMessage(String firstName, String lastName) {
+        // If both first name & last name are provided
+        if (firstName != null && !firstName.isEmpty() && lastName != null && !lastName.isEmpty()) {
+            return "Hello, " + firstName + " " + lastName + "!";
+        }
+        // If only first name is provided
+        else if (firstName != null && !firstName.isEmpty()) {
+            return "Hello, " + firstName + "!";
+        }
+        // If only last name is provided
+        else if (lastName != null && !lastName.isEmpty()) {
+            return "Hello, " + lastName + "!";
+        }
+        // If neither is provided, return default message
+        return "Hello, World!";
     }
 
     // Put Method to  update the data
