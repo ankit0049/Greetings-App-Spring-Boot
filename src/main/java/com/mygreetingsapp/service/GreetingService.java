@@ -63,8 +63,13 @@ public class GreetingService {
         return greetingRepository.save(greeting);
     }
 
-    // Delete method to delete the data
-    public String deleteGreetingMessage() {
-        return "Hello Ankit Rajput, this is a DELETE request!";
+    // Deleting the Greeting Message if id exists else throw the exception
+    public void deleteGreeting(Long id) {
+        if (!greetingRepository.existsById(id)) {
+            // throwing the exception that id not present in the repository
+            throw new RuntimeException("Greeting not found for ID: " + id);
+        }
+        // Make call and delete the Greeting
+        greetingRepository.deleteById(id);
     }
 }
